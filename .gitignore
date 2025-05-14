@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Fichiers temporaires Power BI
 *.tmp
 *.bak
@@ -10,3 +11,6 @@
 node_modules/
 __pycache__/
 .env
+=======
+
+>>>>>>> 0ba1f41ae2baa8fb1f579cc9a1a92c912d3d565a
