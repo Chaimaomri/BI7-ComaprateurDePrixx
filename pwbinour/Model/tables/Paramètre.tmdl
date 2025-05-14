@@ -1,0 +1,23 @@
+﻿table Paramètre
+
+	measure 'Valeur Paramètre' = SELECTEDVALUE('Paramètre'[Paramètre])
+		formatString: 0
+
+	column Paramètre
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Paramètre-948f5558-abf1-49e6-a157-1db11597ac07 = calculated
+		mode: import
+		source = GENERATESERIES(0, 20, 1)
+
+	annotation PBI_Id = de194fd7aa814874a95c323de0fc6acb
+

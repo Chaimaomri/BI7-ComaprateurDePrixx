@@ -1,0 +1,236 @@
+﻿table Fait_RESERVATIONS
+
+	measure Total_Reservations = ```
+			COUNT(Fait_RESERVATIONS[Reservation_PK])
+			
+			```
+		formatString: 0
+
+	measure Ventes_Par_Hotel = ```
+			
+			CALCULATE(SUM(Fait_ACHATS[Prix_Total]), Dim_Hotels[name])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_Methode_Paiement = ```
+			
+			CALCULATE(SUM(Fait_RESERVATIONS[Total_Prix]), Fait_RESERVATIONS[Méthode_Paiement])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Taux_Satisfaction_Reservation = ```
+			
+			DIVIDE(
+			    COUNTROWS(FILTER(Fait_RESERVATIONS, Fait_RESERVATIONS[Note_Client] >= 4)),
+			    COUNTROWS(Fait_RESERVATIONS)
+			) * 100
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Taux_Satisfaction_Client = ```
+			
+			DIVIDE(
+			    COUNTROWS(FILTER(Fait_RESERVATIONS, Fait_RESERVATIONS[Note_Client] >= 4)),
+			    COUNTROWS(Fait_RESERVATIONS)
+			) * 100
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_Paiement = ```
+			
+			CALCULATE(
+			    SUM(Fait_RESERVATIONS[Total_Prix]),
+			    Fait_RESERVATIONS[Méthode_Paiement]
+			)
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Reservations_Par_Hotel = ```
+			
+			CALCULATE(
+			    COUNT(Fait_RESERVATIONS[Reservation_PK]),
+			    Dim_Hotels[HotelID]
+			)
+			
+			```
+		formatString: 0
+
+	measure Reservation_Par_Année = ```
+			
+			CALCULATE(
+			    SUM(Fait_RESERVATIONS[Reservation_PK]),
+			    DimTemps[Année]
+			)
+			
+			```
+		formatString: 0
+
+	measure Rentabilite_Par_Hotel = ```
+			
+			SUM(Fait_RESERVATIONS[Total_Prix])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Nombre_Billets_Par_Vol = ```
+			
+			CALCULATE(
+			    COUNT(Fait_RESERVATIONS[Reservation_PK]),
+			    Dim_Vols[Flight_PK] 
+			)
+			
+			```
+		formatString: 0
+
+	measure Rentabilite_Par_Agence = ```
+			
+			CALCULATE(
+			    SUM(Fait_RESERVATIONS[Total_Prix])
+			  
+			)
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Reservations_Par_Localisation1 =
+			
+			CALCULATE(
+			    COUNT(Fait_RESERVATIONS[Reservation_PK]),
+			    Dim_Localisation[Localite]
+			)
+		formatString: 0
+
+	measure ChiffreAffaire_Par_Agence = SUM('Fait_RESERVATIONS'[Total_Prix])
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Revenu_revervation_Par_Mois = ```
+			
+			
+			    SUM(Fait_RESERVATIONS[Total_Prix])
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Quantité Vendue' = SUM(Fait_ACHATS[Quantité_Achetée])
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Réservations Mensuelles' =
+			
+			COUNTROWS(Fait_RESERVATIONS)
+		formatString: 0
+
+	column Reservation_PK
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Reservation_PK
+
+		annotation SummarizationSetBy = Automatic
+
+	column ClientID_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: ClientID_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hotel_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Hotel_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Flight_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Flight_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Localisation_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Localisation_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Temps_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Temps_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Prix
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Total_Prix
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Status_Reservation
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Status_Reservation
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Méthode_Paiement
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Méthode_Paiement
+
+		annotation SummarizationSetBy = Automatic
+
+	column Note_Client
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Note_Client
+
+		annotation SummarizationSetBy = Automatic
+
+	column page = ```
+			salesdirector 
+			```
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fait_RESERVATIONS-53025972-c8b4-4c73-853e-dbf48fa59283 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Fait_RESERVATIONS = PI_DW{[Schema="dbo",Item="Fait_RESERVATIONS"]}[Data]
+				in
+				    dbo_Fait_RESERVATIONS
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,12 @@
+{
+  "Version": 3,
+  "ReportSettings": {
+    "ShowHiddenFields": true,
+    "QnaLsdlSharingPermission": 1
+  },
+  "QueriesSettings": {
+    "TypeDetectionEnabled": true,
+    "RelationshipImportEnabled": true,
+    "Version": "2.112.1161.0"
+  }
+}

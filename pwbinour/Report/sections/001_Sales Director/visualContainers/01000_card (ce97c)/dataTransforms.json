@@ -1,0 +1,52 @@
+{
+  "projectionOrdering": {
+    "Values": [
+      0
+    ]
+  },
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "Reservation_Par_Année",
+        "Name": "Fait_RESERVATIONS.Reservation_Par_Mois",
+        "Type": 3,
+        "Format": "0"
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Values",
+          "Projection": 0,
+          "isActive": false
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "Reservation_Par_Année",
+      "format": "0",
+      "queryName": "Fait_RESERVATIONS.Reservation_Par_Mois",
+      "roles": {
+        "Values": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Fait_RESERVATIONS"
+            }
+          },
+          "Property": "Reservation_Par_Année"
+        }
+      }
+    }
+  ]
+}

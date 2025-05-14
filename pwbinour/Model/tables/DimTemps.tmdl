@@ -1,0 +1,148 @@
+﻿table DimTemps
+
+	measure AccessGranted = ```
+			
+			VAR SelectedEmail = SELECTEDVALUE(UserAccess[Email])
+			VAR SelectedRole = SELECTEDVALUE(UserAccess[Role])
+			RETURN
+			IF (
+			    CALCULATE (
+			        COUNTROWS (UserAccess),
+			        UserAccess[Email] = SelectedEmail &&
+			        UserAccess[Role] = SelectedRole
+			    ) > 0,
+			    1,
+			    0
+			)
+			
+			```
+		formatString: 0
+
+	measure ShowSalesPage = ```
+			
+			VAR Page = SELECTEDVALUE(UserAccess[PageAccess])
+			RETURN IF(Page = "SalesDirectorPage", 1, 0)
+			
+			```
+		formatString: 0
+
+	measure ShowMarketingPage = ```
+			
+			VAR Page = SELECTEDVALUE(UserAccess[PageAccess])
+			RETURN IF(Page = "MarketingPage", 1, 0)
+			
+			```
+		formatString: 0
+
+	measure ShowCFOPage = ```
+			
+			VAR Page = SELECTEDVALUE(UserAccess[PageAccess])
+			RETURN IF(Page = "CFOPage", 1, 0)
+			
+			```
+		formatString: 0
+
+	column TempsID
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: TempsID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_Complète
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Date_Complète
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jour
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Jour
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mois
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Mois
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Année
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Année
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jour_Semaine
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Jour_Semaine
+
+		annotation SummarizationSetBy = Automatic
+
+	column Semaine_Année
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Semaine_Année
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jour_Férié
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Jour_Férié
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Date_Complète Hiérarchie'
+
+		level Date_Complète
+			column: Date_Complète
+
+		level Année
+			column: Année
+
+		level Trimestre
+			column: Trimestre
+
+		level Mois
+			column: Mois
+
+		level Jour
+			column: Jour
+
+	hierarchy 'Année Hiérarchie'
+
+		level Année
+			column: Année
+
+	partition DimTemps-1b6fb8f4-eea7-443e-ab19-f2055f1b6d12 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_DimTemps = PI_DW{[Schema="dbo",Item="DimTemps"]}[Data]
+				in
+				    dbo_DimTemps
+
+	annotation PBI_ResultType = Table
+

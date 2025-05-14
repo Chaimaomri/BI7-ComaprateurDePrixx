@@ -1,0 +1,38 @@
+{
+  "name": "bffce240c51e6c023273",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "height": 51.2347354138399,
+        "width": 53.5315421958949,
+        "x": 181.09532347574688,
+        "y": 22.278235989497009,
+        "z": 14006,
+        "tabOrder": 0
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "image",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "reservation-en-ligne5224211796023254.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "eb1b591e126c514602b6"
+}

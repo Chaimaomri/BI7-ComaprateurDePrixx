@@ -1,0 +1,88 @@
+﻿table client_segmentation
+
+	column Column1
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Montant_Reservations
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Montant_Reservations
+
+		annotation SummarizationSetBy = Automatic
+
+	column Note_Moyenne
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Note_Moyenne
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nbr_Reservations
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Nbr_Reservations
+
+		annotation SummarizationSetBy = Automatic
+
+	column Montant_Achats
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Montant_Achats
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Quantité
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Total_Quantité
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nbr_Achats
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Nbr_Achats
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cluster
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column PCA1
+		dataType: string
+		summarizeBy: none
+		sourceColumn: PCA1
+
+		annotation SummarizationSetBy = Automatic
+
+	column PCA2
+		dataType: string
+		summarizeBy: none
+		sourceColumn: PCA2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition client_segmentation-3bb52fed-16e2-47d8-92d3-5e6d187db95b = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\NOUR\Downloads\client_segmentation.csv"),[Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"", Int64.Type}, {"Montant_Reservations", type text}, {"Note_Moyenne", type text}, {"Nbr_Reservations", type text}, {"Montant_Achats", type text}, {"Total_Quantité", type text}, {"Nbr_Achats", type text}, {"Cluster", Int64.Type}, {"PCA1", type text}, {"PCA2", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

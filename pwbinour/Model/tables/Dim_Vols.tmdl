@@ -1,0 +1,71 @@
+﻿table Dim_Vols
+
+	column Flight_PK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Flight_PK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Airline
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Airline
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartAirport
+		dataType: string
+		summarizeBy: none
+		sourceColumn: DepartAirport
+
+		annotation SummarizationSetBy = Automatic
+
+	column ArriveAirport
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ArriveAirport
+
+		annotation SummarizationSetBy = Automatic
+
+	column DepartHour
+		dataType: string
+		summarizeBy: none
+		sourceColumn: DepartHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column ArriveHour
+		dataType: string
+		summarizeBy: none
+		sourceColumn: ArriveHour
+
+		annotation SummarizationSetBy = Automatic
+
+	column Matricule_Vol
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Matricule_Vol
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agence
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Agence
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Vols-675deb00-b9db-4d67-b2bb-5fd23055d4ee = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Dim_Vols = PI_DW{[Schema="dbo",Item="Dim_Vols"]}[Data]
+				in
+				    dbo_Dim_Vols
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,39 @@
+{
+  "name": "df007d328c400a4856aa",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "height": 64.367393800229621,
+        "width": 59.1044776119403,
+        "x": 227.66317665404324,
+        "y": 21.583014891101321,
+        "z": 1000,
+        "tabOrder": 0
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "image",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "reservation062212799153031795.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "e4181b000076a1c03761",
+  "howCreated": "InsertVisualButton"
+}

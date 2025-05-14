@@ -1,0 +1,37 @@
+{
+  "name": "20e3915328dbba43aaca",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 13.446519524617997,
+        "y": 14.66893039049236,
+        "z": 2000,
+        "width": 183.3616298811545,
+        "height": 161.35823429541597,
+        "tabOrder": 0
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "image",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "Capture_d'_cran_2025-04-04_1836973237642134573.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

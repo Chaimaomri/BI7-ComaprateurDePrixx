@@ -1,0 +1,39 @@
+﻿table Dim_Clients
+
+	measure Clients_Récurrents8 = ```
+			
+			CALCULATE(
+			    COUNTROWS(Dim_Clients),
+			    FILTER(Dim_Clients, COUNTROWS(Dim_Clients) > 1)
+			)
+			
+			```
+		formatString: 0
+
+	column Client_PK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Client_PK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nom_Client
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Nom_Client
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Clients-96af2ede-a54c-4294-83fd-75862bb4e17b = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Dim_Clients = PI_DW{[Schema="dbo",Item="Dim_Clients"]}[Data]
+				in
+				    dbo_Dim_Clients
+
+	annotation PBI_ResultType = Table
+
