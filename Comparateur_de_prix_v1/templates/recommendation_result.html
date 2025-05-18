@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Results | Price Comparator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a6ea5;
+            --secondary-color: #004e98;
+            --accent-color: #ff6700;
+            --light-color: #f8f9fa;
+            --dark-color: #2b2d42;
+            --text-color: #4a4a4a;
+            --border-radius: 12px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        .result-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 1000px;
+        }
+        .result-title {
+            color: var(--secondary-color);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e05d00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 103, 0, 0.3);
+        }
+        .btn-outline-secondary {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        .btn-outline-secondary:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .interpretation {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+        .table-recommendations {
+            margin: 2rem 0;
+        }
+        .table-recommendations th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .similar-clients {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .client-badge {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            background-color: rgba(0, 78, 152, 0.08);
+            font-weight: 500;
+        }
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="container">
+            <div class="result-card">
+                <h1 class="result-title text-center">
+                    <i class="fas fa-smile me-2"></i>Product Recommendation Results
+                </h1>
+                
+                {% if error %}
+                    <div class="alert alert-danger text-center">
+                        <i class="fas fa-exclamation-triangle me-2"></i>{{ error }}
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="/recommandation" class="btn btn-primary">
+                            <i class="fas fa-redo me-2"></i>Try Again
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="text-center">
+                        <h4 class="mb-3"><i class="fas fa-user me-2"></i>Recommendations for {{ client_nom }}</h4>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h5><i class="fas fa-lightbulb me-2"></i>Interpreting Your Results</h5>
+                        <p>The recommendations below are tailored for <strong>{{ client_nom }}</strong> based on their purchase history and similarities with other clients. The scores indicate the predicted relevance of each product.</p>
+                    </div>
+                    
+                    <div class="similar-clients">
+                        <h5><i class="fas fa-users me-2"></i>Similar Clients:</h5>
+                        {% for client in clients_similaires %}
+                            <div class="client-badge">
+                                <span>{{ client }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <table class="table table-recommendations table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Recommendation Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for produit, score in recommandations %}
+                                <tr>
+                                    <td>{{ produit }}</td>
+                                    <td>{{ score|round(2) }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    <div class="d-flex justify-content-center gap-3 mt-5">
+                        <a href="/recommandation" class="btn btn-primary">
+                            <i class="fas fa-redo me-2"></i>New Recommendation
+                        </a>
+                        <a href="/" class="btn btn-outline-secondary">
+                            <i class="fas fa-home me-2"></i>Return Home
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Advanced Analytics</h5>
+                    <p>Our recommendation system helps personalize product offerings for your customers.</p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Resources</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="/documentation"><i class="fas fa-book me-2"></i>Documentation</a></li>
+                        <li class="mb-2"><a href="/tutorials"><i class="fas fa-graduation-cap me-2"></i>Tutorials</a></li>
+                        <li><a href="/api"><i class="fas fa-code me-2"></i>API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enterprise Solutions</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="/enterprise"><i class="fas fa-building me-2"></i>For Organizations</a></li>
+                        <li><a href="/contact-sales"><i class="fas fa-headset me-2"></i>Contact Sales</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">© 2025 Price Comparator. Part of the Pioneers Analytics Suite.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

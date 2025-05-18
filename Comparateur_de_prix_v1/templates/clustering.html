@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Clustering | Price Comparator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a6ea5;
+            --secondary-color: #004e98;
+            --accent-color: #ff6700;
+            --light-color: #f8f9fa;
+            --dark-color: #2b2d42;
+            --text-color: #4a4a4a;
+            --border-radius: 12px;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 2rem 0;
+        }
+        .upload-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+        .form-title {
+            color: var(--secondary-color);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .file-input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e05d00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 103, 0, 0.3);
+        }
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        .social-links a {
+            color: white;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="container">
+            <div class="upload-card">
+                <h1 class="form-title text-center">
+                    <i class="fas fa-project-diagram me-2"></i>Customer Segmentation Analysis
+                </h1>
+                <p class="text-center mb-4">Upload your data files to perform customer clustering analysis</p>
+                
+                <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <div class="mb-4">
+                        <label for="fichier_achat" class="file-input-label">
+                            <i class="fas fa-file-invoice-dollar me-2"></i>Purchases Data (CSV)
+                        </label>
+                        <input type="file" class="form-control" name="fichier_achat" required>
+                        <div class="invalid-feedback">Please select a file</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="fichier_reservation" class="file-input-label">
+                            <i class="fas fa-calendar-check me-2"></i>Reservations Data (CSV)
+                        </label>
+                        <input type="file" class="form-control" name="fichier_reservation" required>
+                        <div class="invalid-feedback">Please select a file</div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="fichier_temps" class="file-input-label">
+                            <i class="fas fa-clock me-2"></i>Time Data (CSV)
+                        </label>
+                        <input type="file" class="form-control" name="fichier_temps" required>
+                        <div class="invalid-feedback">Please select a file</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket me-2"></i>Run Clustering Analysis
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Price Comparator</h5>
+                    <p>Advanced analytics platform for customer segmentation and pricing optimization.</p>
+                    <div class="social-links mt-3">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="/"><i class="fas fa-chevron-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="/clustering"><i class="fas fa-chevron-right me-2"></i>Clustering</a></li>
+                        <li class="mb-2"><a href="/contact"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>support@pricecomparator.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i>San Francisco, CA</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Price Comparator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>

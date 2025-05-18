@@ -1,0 +1,119 @@
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.primary {
+    background: var(--accent-color);
+    color: white;
+}
+
+.secondary {
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+.legal-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.legal-content {
+    background: #fff;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
+/* Ajoutez ces styles */
+.corner-logo {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: auto;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+    z-index: 1000;
+}
+
+.header-container {
+    position: relative;
+    padding-left: 70px;
+}
+
+/* Version mobile */
+@media (max-width: 768px) {
+    .corner-logo {
+        height: 30px;
+        left: 10px;
+    }
+    
+    .header-container {
+        padding-left: 50px;
+    }
+    
+    .header-title h1 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Conserver vos styles existants modifiés */
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.primary {
+    background: var(--accent-color);
+    color: white;
+}
+
+.secondary {
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+}
+.legal-content h3 {
+    color: #2b2d42;
+    margin: 2rem 0 1rem;
+}
+
+.legal-content ul {
+    padding-left: 2rem;
+    margin: 1rem 0;
+}
+
+.legal-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.legal-content td, .legal-content th {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.legal-content th {
+    background-color: #f8f9fa;
+}
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .brand h1 {
+        display: none;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,13 @@
+Flask
+numpy
+scikit-learn
+tensorflow
+pickle-mixin
+pandas
+joblib
+nltk
+matplotlib
+seaborn
+pyodbc
+scipy
+

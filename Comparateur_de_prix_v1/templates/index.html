@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparateur de Prix – Solutions BI & IA Avancées</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #3a6ea5;
+            --secondary-color: #004e98;
+            --accent-color: #ff6700;
+            --accent-light: #ff9e5e;
+            --light-color: #f8f9fa;
+            --dark-color: #2b2d42;
+            --text-color: #4a4a4a;
+            --text-light: #6c757d;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --info-color: #17a2b8;
+            --card-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.2);
+            --card-shadow-hover: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+            --transition: all 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+            --border-radius: 12px;
+            --section-padding: 6rem 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+        }
+        
+        p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        a {
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .header-scrolled {
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-title span {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-left: 1rem;
+            font-weight: 300;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            margin-left: 2rem;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 103, 0, 0.3);
+            transition: var(--transition);
+        }
+        
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 103, 0, 0.4);
+            background-color: var(--accent-light);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            padding: 10rem 0 6rem;
+            background: linear-gradient(135deg, rgba(58, 110, 165, 0.05) 0%, rgba(0, 78, 152, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content {
+            flex: 1;
+            padding-right: 3rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 103, 0, 0.4);
+            background-color: var(--accent-light);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 78, 152, 0.2);
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+            height: 500px;
+        }
+        
+        .hero-image img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .hero-shape {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58, 110, 165, 0.1) 0%, rgba(0, 78, 152, 0.1) 100%);
+            top: -300px;
+            right: -300px;
+            z-index: 1;
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: var(--section-padding);
+            background-color: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-header h2 {
+            color: var(--secondary-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2.5rem 2rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(58, 110, 165, 0.03) 0%, rgba(0, 78, 152, 0.03) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 20px rgba(0, 78, 152, 0.2);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: var(--section-padding);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            padding: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: radial-gradient(var(--accent-color) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 1;
+        }
+        
+        /* ODD Section */
+        .odd-section {
+            padding: var(--section-padding);
+            background-color: white;
+            text-align: center;
+        }
+        
+        .odd-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .odd-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .odd-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            width: 350px;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border-bottom: 4px solid var(--accent-color);
+            text-align: left;
+        }
+        
+        .odd-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        
+        .odd-card h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .odd-card h3 i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .odd-card p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .odd-benefits {
+            list-style-type: none;
+            margin-top: 1.5rem;
+        }
+        
+        .odd-benefits li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.8rem;
+        }
+        
+        .odd-benefits li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+        }
+        
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+        
+        .logo-row img {
+            height: 80px;
+            transition: var(--transition);
+            filter: grayscale(100%) brightness(0.8);
+        }
+        
+        .logo-row img:hover {
+            transform: scale(1.1);
+            filter: grayscale(0) brightness(1);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background-color: var(--accent-color);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-col p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style-type: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--dark-color) transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+            
+            .hero-cta {
+                justify-content: center;
+            }
+            
+            .hero-image {
+                width: 80%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .header-title h1 {
+                font-size: 1.6rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-cta {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.6rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .logo-row img {
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .odd-card {
+                width: 100%;
+            }
+        }
+
+        /* Ajoutez ces styles après la section de navigation existante */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--dark-color) !important;
+            padding: 0.8rem 1rem;
+            margin: 0.3rem 0;
+            border-radius: 6px;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(0, 78, 152, 0.05);
+            transform: translateX(5px);
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                background: transparent;
+            }
+            
+            .dropdown-content a {
+                color: white !important;
+                padding-left: 2rem;
+            }
+        }
+
+        .feature-card {
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .hero-image img {
+            transition: transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Effet de révélation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Gradient animé */
+        .gradient-text {
+            background: linear-gradient(45deg, 
+            var(--accent-color), 
+            var(--secondary-color),
+            var(--primary-color));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Effet de vague animé */
+        .wave-divider {
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg"><path fill="%23ffffff" fill-opacity="1" d="M0,160L48,149.3C96,139,192,117,288,128C384,139,480,181,576,176C672,171,768,117,864,101.3C960,85,1056,107,1152,128C1248,149,1344,171,1392,181.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            animation: wave 12s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1440px; }
+        }
+
+        /* Loader sophistiqué */
+        .loader {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top-color: var(--accent-color);
+            animation: spin 1s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+  <header id="header">
+    <div class="header-container">
+        <div class="header-title">
+            <h1>Price Comparator</h1>
+            <span class="full-name">By Pioneers</span>
+        </div>
+        
+        <nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/"><i class="fas fa-home"></i> Welcome </a>
+
+                <!-- Menu déroulant Solutions -->
+                <div class="dropdown">
+                    <a href="#"><i class="fas fa-cube"></i> Solutions <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/regression"><i class="fas fa-chart-bar"></i> Estimated flight times</a>
+                        <a href="/analyse_sentimentale"><i class="fas fa-smile"></i> Sentimental Analysis</a>
+                        <a href="/clustering"><i class="fas fa-project-diagram"></i> Customer segmentation</a>
+                        <a href="/serie_temporelle"><i class="fas fa-chart-line"></i> Temporal forecasts</a>
+                        <a href="/recommandation"><i class="fas fa-smile"></i> Recommendation system</a>
+                    </div>
+                </div>
+
+                <a href="/contact" class="nav-cta">
+                    <i class="fas fa-paper-plane"></i> Contact
+                </a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-content" data-aos="fade-right">
+            <h1>Advanced data analysis solutions</h1>
+            <p>
+              Our platform integrates modern machine learning and deep learning techniques to optimize the user experience and provide actionable insights from price comparison data.
+            </p>
+            
+            <div class="hero-cta">
+                <a href="#features" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Discover our solutions
+                </a>
+                <a href="/demo" class="btn btn-secondary">
+                    <i class="fas fa-play-circle"></i> See the demo
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-image" data-aos="fade-left">
+            <img src="{{ url_for('static', filename='img/dashboard.webp') }}" alt="Dashboard Analytics">
+        </div>    
+        <div class="hero-shape"></div>
+    </div>
+</section>
+
+<section class="features-section" id="features">
+    <div class="section-header" data-aos="fade-up">
+        <h2>Our innovative solutions</h2>
+        <p>
+          We combine Business Intelligence and Artificial Intelligence to deliver powerful analytics and accurate predictions for your pricing strategy.
+        </p>
+    </div>
+    
+    <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Customer segmentation</h3>
+            <p>
+              In-depth analysis of purchasing behaviors using advanced clustering algorithms (K-Means, DBSCAN, Hierarchical)
+              for increased personalized offers.
+            </p>
+            <a href="/clustering" class="tooltip">
+               Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Learn how to segment your customers effectively</span>
+            </a>
+        </div>
+        
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">
+                <i class="fas fa-random"></i>
+            </div>
+            <h3>Payment prediction</h3>
+            <p>
+              Classification models (Random Forest, XGBoost) to predict preferred payment methods and optimize the checkout process.
+            </p>
+            <a href="/classification" class="tooltip">
+              Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Optimize your payment options</span>
+            </a>
+        </div>
+        
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon">
+                <i class="fas fa-plane"></i>
+            </div>
+            <h3>Estimated flight times</h3>
+            <p>
+              Regression algorithms (linear, SVM, Random Forest) to accurately predict travel times and improve planning.
+            </p>
+            <a href="/regression" class="tooltip">
+              Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Improve the travel experience</span>
+            </a>
+        </div>
+        
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Temporal forecasts</h3>
+            <p>
+              ARIMA and Prophet models to anticipate seasonal demand and dynamically adjust pricing strategies.
+            </p>
+            <a href="/serie_temporelle" class="tooltip">
+                Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Optimize your prices in real time</span>
+            </a>
+        </div>
+        
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="feature-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h3>Advanced AI Solutions</h3>
+            <p>
+              Recommendation systems, sentiment analysis and computer vision for an ultra-personalized customer experience.
+            </p>
+            <a href="/deep_learning" class="tooltip">
+                Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Discover our cutting-edge AI solutions</span>
+            </a>
+        </div>
+        
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+            <div class="feature-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Recommendation system</h3>
+            <p>
+              Combining collaborative and content-based filtering with neural architectures for relevant suggestions.
+            </p>
+            <a href="/recommandation" class="tooltip">
+                Learn more <i class="fas fa-arrow-right"></i>
+                <span class="tooltiptext">Boost your sales with our recommendations</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="stats-pattern"></div>
+    <div class="stats-container">
+        <div class="stats-grid">
+            <div class="stat-item" data-aos="fade-up">
+                <div class="stat-number">+95%</div>
+                <div class="stat-label">Accuracy of predictions</div>
+            </div>
+            
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Real-time analysis</div>
+            </div>
+            
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-number">+500K</div>
+                <div class="stat-label">Products analyzed</div>
+            </div>
+            
+            <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-number pulse">100%</div>
+                <div class="stat-label">Satisfaction client</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="odd-section">
+    <div class="odd-container">
+        <div class="section-header" data-aos="fade-up">
+            <h2><i class="fas fa-globe-americas"></i> Contribution to the SDGs</h2>
+            <p>
+              Our commitment to the United Nations Sustainable Development Goals
+            </p>
+        </div>
+        
+        <div class="odd-cards">
+            <div class="odd-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><i class="fas fa-briefcase"></i> SDG 8: Decent work and economic growth </h3>
+                <p>
+                  Our platform promotes sustainable economic growth by optimizing resources and creating job opportunities in the field of data science.
+                </p>
+                
+                <ul class="odd-benefits">
+                    <li>Creation of skilled jobs in AI and data analysis</li>
+                    <li>Optimizing resources for sustainable growth</li>
+                    <li>Continuous training of our teams in the latest technologies</li>
+                </ul>
+            </div>
+            
+            <div class="odd-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><i class="fas fa-recycle"></i> SDG 12: Responsible consumption and production</h3>
+                <p>
+                  We encourage responsible consumption by allowing users to intelligently compare
+                  products and services, thereby reducing waste.
+                </p>
+                
+                <ul class="odd-benefits">
+                    <li>Supply chain optimization</li>
+                    <li>Reducing waste through better planning</li>
+                    <li>Promoting sustainable products through our algorithms</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="logo-row">
+            <img src="{{ url_for('static', filename='img/F_SDG-goals_icons-individual-rgb-08.png') }}" alt="ODD 8" data-aos="fade-up" data-aos-delay="300">
+            <img src="{{ url_for('static', filename='img/odd-12.png') }}" alt="ODD 12" data-aos="fade-up" data-aos-delay="400">
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>Price Comparator</h3>
+            <p>
+              Advanced Business Intelligence and Artificial Intelligence solutions 
+              to optimize pricing strategies and enhance customer experience.
+            </p>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-col">
+            <h3>Solutions</h3>
+            <ul class="footer-links">
+                <li><a href="/classification"><i class="fas fa-chevron-right"></i> Payment prediction</a></li>
+                <li><a href="/regression"><i class="fas fa-chevron-right"></i> Estimated flight times</a></li>
+                <li><a href="/analyse_sentimentale"><i class="fas fa-chevron-right"></i> Sentiment Analysis </a></li>
+                <li><a href="/clustering"><i class="fas fa-chevron-right"></i> Customer segmentation</a></li>
+                <li><a href="/serie_temporelle"><i class="fas fa-chevron-right"></i> Ticket Classification </a></li>
+                <li><a href="/recommandation"><i class="fas fa-chevron-right"></i> Recommendation system</a></li>
+
+            </ul>
+        </div>
+        
+        <div class="footer-col">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+                <li><a href="/documentation"><i class="fas fa-chevron-right"></i> Technical documentation</a></li>
+                <li><a href="/blog"><i class="fas fa-chevron-right"></i> Analysis blog</a></li>
+                <li><a href="/mentions-legales"><i class="fas fa-chevron-right"></i> Legal notices</a></li>
+                <li><a href="/faq"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-col">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+                <li><a href="#politique-confidentialite"><i class="fas fa-chevron-right"></i> Privacy Policy </a></li>
+                <li><a href="#conditions-utilisation"><i class="fas fa-chevron-right"></i> Terms of Service </a></li>
+                <li><a href="#politique-cookies"><i class="fas fa-chevron-right"></i> Cookie Policy </a></li>
+                <li><a href="#contact-juridique"><i class="fas fa-chevron-right"></i> Legal Contact </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Price Comparator - All rights reserved</p>
+        <p>Developed with <i class="fas fa-heart" style="color: var(--accent-color);"></i> for responsible analytics</p>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Initialisation AOS
+  AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-in-out'
+  });
+
+  document.querySelector('.header-title').addEventListener('mouseover', function() {
+        this.querySelector('.full-name').style.opacity = '1';
+    });
+
+    document.querySelector('.header-title').addEventListener('mouseout', function() {
+        this.querySelector('.full-name').style.opacity = '0';
+    });
+
+    // Gestion des menus déroulants
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.addEventListener('mouseover', () => {
+            dropdown.querySelector('.dropdown-content').style.display = 'block';
+        });
+        
+        dropdown.addEventListener('mouseleave', () => {
+            dropdown.querySelector('.dropdown-content').style.display = 'none';
+        });
+    });
+
+  // Gestion du menu mobile
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+
+  mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+  });
+
+  // Header scroll effect
+  window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+          header.classList.add('header-scrolled');
+      } else {
+          header.classList.remove('header-scrolled');
+      }
+  });
+
+  // Fermeture menu mobile au clic sur un lien
+  document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+      });
+  });
+</script>
+</body>
+</html>
