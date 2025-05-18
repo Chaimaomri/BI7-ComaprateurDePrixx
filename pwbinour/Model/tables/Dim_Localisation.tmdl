@@ -1,0 +1,43 @@
+﻿table Dim_Localisation
+
+	column LocalisationID
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: LocalisationID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Delegation
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Delegation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Localite
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Localite
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code_Postal
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Code_Postal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Localisation-cae40eaf-71ea-4378-b1aa-cbc8a8d906c0 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Dim_Localisation = PI_DW{[Schema="dbo",Item="Dim_Localisation"]}[Data]
+				in
+				    dbo_Dim_Localisation
+
+	annotation PBI_ResultType = Table
+

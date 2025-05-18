@@ -1,0 +1,64 @@
+﻿table Dim_Hotels
+
+	measure Reservations_1_Etoile = ```
+			
+			CALCULATE(
+			    COUNT(Fait_RESERVATIONS[Reservation_PK]),
+			    Dim_Hotels[nb_etoiles] = 1
+			)
+			
+			
+			
+			
+			
+			```
+		formatString: 0
+
+	column HotelID
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: HotelID
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column nb_etoiles
+		dataType: string
+		summarizeBy: none
+		sourceColumn: nb_etoiles
+
+		annotation SummarizationSetBy = Automatic
+
+	column formule
+		dataType: string
+		summarizeBy: none
+		sourceColumn: formule
+
+		annotation SummarizationSetBy = Automatic
+
+	column Agence
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Agence
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Hotels-d821dc58-ae17-4155-856a-064b17c9ba45 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Dim_Hotels = PI_DW{[Schema="dbo",Item="Dim_Hotels"]}[Data]
+				in
+				    dbo_Dim_Hotels
+
+	annotation PBI_ResultType = Table
+

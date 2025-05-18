@@ -1,0 +1,12 @@
+# Power BI temp files
+*.tmp
+*.bak
+*.cache
+
+# Visual Studio Code settings
+.vscode/
+
+# Node, Python, etc (si jamais tu ajoutes du code)
+node_modules/
+__pycache__/
+.env

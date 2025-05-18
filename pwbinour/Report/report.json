@@ -1,0 +1,131 @@
+{
+  "id": 0,
+  "layoutOptimization": 0,
+  "pods": [
+    {
+      "boundSection": "ReportSection02470ae5343a01378aba",
+      "config": "{}",
+      "name": "Pod",
+      "referenceScope": 1
+    },
+    {
+      "boundSection": "ReportSection6320d9ecf56f33d462b0",
+      "config": "{}",
+      "name": "Pod2",
+      "parameters": "[{\"name\":\"Param_Filterb4ae450525412f4201a1\",\"boundFilter\":\"Filterb4ae450525412f4201a1\",\"fieldExpr\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"DimTemps\"}},\"Property\":\"Trimestre\"}},\"isLegacySingleSelection\":true}]",
+      "type": 1
+    },
+    {
+      "boundSection": "dc4e14a0db0d2614d985",
+      "config": "{}",
+      "name": "d1183a21a069be079465",
+      "referenceScope": 1
+    }
+  ],
+  "publicCustomVisuals": [
+    "textFilter25A4896A83E0487089E2B90C9AE57C8A",
+    "InforiverCharts582F6C55AB6442EF8FA129089285CB47",
+    "HierarchicalFilterF39DAE8D57A743EF89F5C3809DEE2B67"
+  ],
+  "resourcePackages": [
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "CY22SU11",
+            "path": "BaseThemes/CY22SU11.json",
+            "type": 202
+          }
+        ],
+        "name": "SharedResources",
+        "type": 2
+      }
+    },
+    {
+      "resourcePackage": {
+        "disabled": false,
+        "items": [
+          {
+            "name": "Capture_d'_cran_2025-04-04_1836973237642134573.png",
+            "path": "Capture_d'_cran_2025-04-04_1836973237642134573.png",
+            "type": 100
+          },
+          {
+            "name": "Capture_d'_cran_2025-04-04_1836466252175275404.png",
+            "path": "Capture_d'_cran_2025-04-04_1836466252175275404.png",
+            "type": 100
+          },
+          {
+            "name": "chiffre-daffaires21947686927059784.png",
+            "path": "chiffre-daffaires21947686927059784.png",
+            "type": 100
+          },
+          {
+            "name": "poignee-de-main5868184560025048.png",
+            "path": "poignee-de-main5868184560025048.png",
+            "type": 100
+          },
+          {
+            "name": "Custom7843535917798437.json",
+            "path": "Custom7843535917798437.json",
+            "type": 201
+          },
+          {
+            "name": "348698911269587023775463.png",
+            "path": "348698911269587023775463.png",
+            "type": 100
+          },
+          {
+            "name": "download-removebg-preview_(4)24779761049627635.png",
+            "path": "download-removebg-preview_(4)24779761049627635.png",
+            "type": 100
+          },
+          {
+            "name": "27516158235071750933383.png",
+            "path": "27516158235071750933383.png",
+            "type": 100
+          },
+          {
+            "name": "download-removebg-preview_(5)9218313394217967.png",
+            "path": "download-removebg-preview_(5)9218313394217967.png",
+            "type": 100
+          },
+          {
+            "name": "1087803-removebg-preview17658557756075643.png",
+            "path": "1087803-removebg-preview17658557756075643.png",
+            "type": 100
+          },
+          {
+            "name": "reservation-en-ligne5224211796023254.png",
+            "path": "reservation-en-ligne5224211796023254.png",
+            "type": 100
+          },
+          {
+            "name": "reservation062212799153031795.png",
+            "path": "reservation062212799153031795.png",
+            "type": 100
+          },
+          {
+            "name": "panier20281742563879734.png",
+            "path": "panier20281742563879734.png",
+            "type": 100
+          },
+          {
+            "name": "download-removebg-preview_(7)4030983777283431.png",
+            "path": "download-removebg-preview_(7)4030983777283431.png",
+            "type": 100
+          },
+          {
+            "name": "ChatGPT_Image_May_12,_2025,_01664021701068209.png",
+            "path": "ChatGPT_Image_May_12,_2025,_01664021701068209.png",
+            "type": 100
+          }
+        ],
+        "name": "RegisteredResources",
+        "type": 1
+      }
+    }
+  ],
+  "theme": "Custom7843535917798437.json"
+}

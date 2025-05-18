@@ -1,0 +1,181 @@
+{
+  "name": "8ddea7a906c767c3bd22",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 322.83636749641738,
+        "y": 168.75537391858182,
+        "z": 4000,
+        "width": 863.34271004723746,
+        "height": 491.59174141499921,
+        "tabOrder": 2000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "pythonVisual",
+    "projections": {
+      "Values": [
+        {
+          "queryRef": "resultats_analyse_sentimentale (1).Column1"
+        },
+        {
+          "queryRef": "resultats_analyse_sentimentale (1).Column2"
+        },
+        {
+          "queryRef": "resultats_analyse_sentimentale (1).Column3"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "r",
+          "Entity": "resultats_analyse_sentimentale (1)",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "r"
+              }
+            },
+            "Property": "Column1"
+          },
+          "Name": "resultats_analyse_sentimentale (1).Column1",
+          "NativeReferenceName": "Column1"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "r"
+              }
+            },
+            "Property": "Column2"
+          },
+          "Name": "resultats_analyse_sentimentale (1).Column2",
+          "NativeReferenceName": "Column2"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "r"
+              }
+            },
+            "Property": "Column3"
+          },
+          "Name": "resultats_analyse_sentimentale (1).Column3",
+          "NativeReferenceName": "Column3"
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# Le code suivant, qui crée un dataframe et supprime les lignes dupliquées, est toujours exécuté et sert de préambule à votre script : \n\n# dataset = pandas.DataFrame(Column1, Column2, Column3)\n# dataset = dataset.drop_duplicates()\n\n# Collez ou tapez votre code de script ici :\nimport random\nimport pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import classification_report, confusion_matrix\nimport seaborn as sns\nimport matplotlib.pyplot as plt\n\n# -----------------------\n# 1. Génération de commentaires variés selon les notes\n# -----------------------\ndef generate_comment(note):\n    positive_comments = [\n        \"Super séjour, tout était parfait.\",\n        \"Très bon service, chambre propre.\",\n        \"Le personnel était très accueillant.\",\n        \"J''ai adoré cet hôtel, tout s''est bien passé.\",\n        \"Excellent rapport qualité/prix.\",\n        \"Magnifique vue depuis la chambre.\",\n        \"Service rapide et efficace.\",\n        \"Très bon accueil à la réception.\",\n        \"Je recommande fortement cet endroit.\",\n        \"Parfait pour un séjour en famille.\"\n    ]\n\n    neutral_comments = [\n        \"Séjour correct, sans plus.\",\n        \"C’était moyen, rien de spécial.\",\n        \"Ni bon ni mauvais.\",\n        \"Service acceptable, un peu lent.\",\n        \"Une expérience ordinaire.\",\n        \"Hôtel correct mais un peu bruyant.\",\n        \"Pas très impressionné, mais pas déçu non plus.\",\n        \"Peu de différences par rapport aux autres hôtels.\",\n        \"Manque de personnalité mais fonctionnel.\",\n        \"Chambre simple, basique mais propre.\"\n    ]\n\n    negative_comments = [\n        \"Très mauvaise expérience.\",\n        \"Chambre sale et personnel peu aimable.\",\n        \"Déçu par la qualité du service.\",\n        \"Le vol était en retard, très frustrant.\",\n        \"Je ne recommande pas cet hôtel.\",\n        \"Mauvais rapport qualité/prix.\",\n        \"Beaucoup de bruit toute la nuit.\",\n        \"Propreté insuffisante.\",\n        \"Accueil froid et impersonnel.\",\n        \"Trop cher pour les prestations proposées.\"\n    ]\n\n    phrases = {\n        1: negative_comments,\n        2: negative_comments,\n        3: neutral_comments,\n        4: positive_comments,\n        5: positive_comments\n    }\n\n    return random.choice(phrases[note])\n\n# Génération de données simulées\ndata = []\nfor _ in range(1000):\n    note = random.randint(1, 5)\n    commentaire = generate_comment(note)\n    if note <= 2:\n        sentiment = ''négatif''\n    elif note == 3:\n        sentiment = ''neutre''\n    else:\n        sentiment = ''positif''\n    data.append({''note'': note, ''commentaire'': commentaire, ''sentiment'': sentiment})\n\ndf = pd.DataFrame(data)\n\n# -----------------------\n# 2. Préparation des données\n# -----------------------\nX = df[''commentaire'']\ny = df[''sentiment'']\n\n# Vectorisation du texte\nvectorizer = TfidfVectorizer()\nX_vect = vectorizer.fit_transform(X)\n\n# Split en train/test\nX_train, X_test, y_train, y_test = train_test_split(X_vect, y, test_size=0.2, random_state=42)\n\n# -----------------------\n# 3. Modèle\n# -----------------------\nmodel = RandomForestClassifier(n_estimators=100, random_state=42)\nmodel.fit(X_train, y_train)\n\n# -----------------------\n# 4. Évaluation\n# -----------------------\ny_pred = model.predict(X_test)\n\n# Affichage du rapport de classification\nprint(classification_report(y_test, y_pred))\n\n# Affichage de la matrice de confusion\nconf_matrix = confusion_matrix(y_test, y_pred, labels=[''négatif'', ''neutre'', ''positif''])\nsns.heatmap(conf_matrix, annot=True, fmt=''d'', xticklabels=[''négatif'', ''neutre'', ''positif''],\n            yticklabels=[''négatif'', ''neutre'', ''positif''], cmap=''Blues'')\nplt.xlabel(''Prédit'')\nplt.ylabel(''Vrai'')\nplt.title(''Matrice de confusion - Analyse sentimentale'')\nplt.show()'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "22D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

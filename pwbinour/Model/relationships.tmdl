@@ -1,0 +1,41 @@
+﻿relationship cec29ccb-6596-4634-b8bc-63f1f4af0884
+	fromColumn: Fait_ACHATS.Client_FK
+	toColumn: Dim_Clients.Client_PK
+
+relationship a1410761-af91-40a6-9668-baa17bdb7123
+	fromColumn: Fait_RESERVATIONS.Temps_FK
+	toColumn: DimTemps.TempsID
+
+relationship 8bfb7515-e322-42ca-ae50-fa97f40f5712
+	fromColumn: Fait_RESERVATIONS.ClientID_FK
+	toColumn: Dim_Clients.Client_PK
+
+relationship 053d97f5-6a5b-4e48-8e17-bb2eff709bfb
+	fromColumn: Fait_RESERVATIONS.Hotel_FK
+	toColumn: Dim_Hotels.HotelID
+
+relationship f5bd1dc4-ff26-4c90-97bc-d542c4b1e8be
+	fromColumn: Fait_ACHATS.Localisation_FK
+	toColumn: Dim_Localisation.LocalisationID
+
+relationship 0b26a0b5-a329-407d-9cce-d3def58b732a
+	fromColumn: Fait_RESERVATIONS.Localisation_FK
+	toColumn: Dim_Localisation.LocalisationID
+
+relationship 7dff9245-a904-48e3-9fd9-1979af12eb69
+	fromColumn: Fait_ACHATS.TempsID_FK
+	toColumn: DimTemps.TempsID
+
+relationship 4254006c-6ff1-4f8a-8b4b-961f70236802
+	fromColumn: Fait_ACHATS.Produit_FK
+	toColumn: Dim_Produits.ProduitID
+
+relationship 213efc45-0328-449f-a4ee-e78e8045edca
+	fromColumn: Fait_RESERVATIONS.Flight_FK
+	toColumn: Dim_Vols.Flight_PK
+
+relationship 56526aa5-9ce5-4e9c-a991-f557518374d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: prevision_sarima_reservations.ds
+	toColumn: LocalDateTable_2444906a-d3cb-4d82-b9e0-9d98f0b97da6.Date
+

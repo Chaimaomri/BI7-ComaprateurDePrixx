@@ -1,0 +1,84 @@
+﻿table Dim_Produits
+
+	measure 'DIVERSITE DES PRODUITS%' = DIVIDE(DISTINCTCOUNT(Dim_Produits[ProduitID]),CALCULATE(DISTINCTCOUNT(Dim_Produits[ProduitID]),ALL(Dim_Produits[Magasin])))
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_CatégorieC = ```
+			
+			CALCULATE(SUM(Fait_ACHATS[Prix_Total]), Dim_Produits[Marque])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Rentabilite_Par_Marque = ```
+			
+			SUM(Fait_ACHATS[Prix_Total])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ProduitID
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: ProduitID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produit
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Produit
+
+		annotation SummarizationSetBy = Automatic
+
+	column categorieProduit
+		dataType: string
+		summarizeBy: none
+		sourceColumn: categorieProduit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marque
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Marque
+
+		annotation SummarizationSetBy = Automatic
+
+	column Taille
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Taille
+
+		annotation SummarizationSetBy = Automatic
+
+	column CodeProduit
+		dataType: string
+		summarizeBy: none
+		sourceColumn: CodeProduit
+
+		annotation SummarizationSetBy = Automatic
+
+	column Magasin
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Magasin
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Produits-7368d7db-d892-4a51-96c7-4bb6d8fa0143 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Dim_Produits = PI_DW{[Schema="dbo",Item="Dim_Produits"]}[Data]
+				in
+				    dbo_Dim_Produits
+
+	annotation PBI_ResultType = Table
+

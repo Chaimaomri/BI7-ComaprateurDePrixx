@@ -1,0 +1,12 @@
+﻿role 'Nouveau rôle'
+	modelPermission: read
+
+	tablePermission navigation = ```
+			[Colonne 1] = USERPRINCIPALNAME()
+			
+			
+			
+			```
+
+	annotation PBI_Id = 01ef82cd3dbe47898a4e6b04f32a6312
+

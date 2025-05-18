@@ -1,0 +1,55 @@
+﻿table navigation
+
+	measure UserRole = ```
+			
+			LOOKUPVALUE(
+			    navigation[Colonne 2],
+			    navigation[Colonne 1],
+			    USERPRINCIPALNAME()
+			)
+			
+			```
+
+	measure PageCible = ```
+			
+			SWITCH(
+			    LOOKUPVALUE(navigation[Colonne 2], navigation[Colonne 1], USERPRINCIPALNAME()),
+			    "salesdirectors", "Sales Director",
+			    "marketingdirectors", "Marketing Director",
+			    "chiefdirectors", "Chief Financial Officer (CFO)",
+			    "Overview"  -- page par défaut
+			)
+			
+			```
+
+	column 'Colonne 1'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Colonne 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Colonne 2'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Colonne 2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition navigation-00f13c32-b685-4a45-9ddb-83cd4d50b479 = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WKk7MSS1OySxKTS7JLyp2SC0uKMos0UvOz1XSQcgVg+SUYnWilXITi7JTSzLz0lFVwoXhJoFVp2Um5iWnopmanJGZmoakLhYA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Colonne 1" = _t, #"Colonne 2" = _t]),
+				    #"Type modifié" = Table.TransformColumnTypes(Source,{{"Colonne 1", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

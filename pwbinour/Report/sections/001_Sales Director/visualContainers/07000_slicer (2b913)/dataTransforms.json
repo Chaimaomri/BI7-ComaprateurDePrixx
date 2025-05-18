@@ -1,0 +1,318 @@
+{
+  "objects": {
+    "data": [
+      {
+        "properties": {
+          "mode": {
+            "expr": {
+              "Literal": {
+                "Value": "'Basic'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "general": [
+      {
+        "properties": {
+          "orientation": {
+            "expr": {
+              "Literal": {
+                "Value": "1D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "header": [
+      {
+        "properties": {
+          "bold": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "fontFamily": {
+            "expr": {
+              "Literal": {
+                "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+              }
+            }
+          },
+          "textSize": {
+            "expr": {
+              "Literal": {
+                "Value": "13D"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 3,
+                    "Percent": 0
+                  }
+                }
+              }
+            }
+          },
+          "background": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 0,
+                    "Percent": -0.3
+                  }
+                }
+              }
+            }
+          },
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Date_Complète'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "items": [
+      {
+        "properties": {
+          "background": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 3,
+                    "Percent": -0.25
+                  }
+                }
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 0,
+                    "Percent": 0
+                  }
+                }
+              }
+            }
+          },
+          "textSize": {
+            "expr": {
+              "Literal": {
+                "Value": "15D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "projectionOrdering": {
+    "Values": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "projectionActiveItems": {
+    "Values": [
+      {
+        "queryRef": "DimTemps.Date_Complète Hiérarchie.Date_Complète",
+        "suppressConcat": false
+      }
+    ]
+  },
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "Date_Complète",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Date_Complète",
+        "Type": 2048
+      },
+      {
+        "Restatement": "Année",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Année",
+        "Type": 3,
+        "Format": "0"
+      },
+      {
+        "Restatement": "Trimestre",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Trimestre",
+        "Type": 3,
+        "Format": "0"
+      },
+      {
+        "Restatement": "Mois",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Mois",
+        "Type": 3,
+        "Format": "0"
+      }
+    ],
+    "Filters": [
+      {
+        "type": 0,
+        "expression": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DimTemps"
+              }
+            },
+            "Property": "Trimestre"
+          }
+        }
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Values",
+          "Projection": 0,
+          "isActive": true
+        },
+        {
+          "Name": "Values",
+          "Projection": 1,
+          "isActive": false
+        },
+        {
+          "Name": "Values",
+          "Projection": 2,
+          "isActive": false
+        },
+        {
+          "Name": "Values",
+          "Projection": 3,
+          "isActive": false
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "Date_Complète",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Date_Complète",
+      "roles": {
+        "Values": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 1
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Date_Complète"
+        }
+      }
+    },
+    {
+      "displayName": "Année",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Année",
+      "roles": {
+        "Values": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Année"
+        }
+      }
+    },
+    {
+      "displayName": "Trimestre",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Trimestre",
+      "roles": {
+        "Values": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Trimestre"
+        }
+      }
+    },
+    {
+      "displayName": "Mois",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Mois",
+      "roles": {
+        "Values": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Mois"
+        }
+      }
+    }
+  ]
+}

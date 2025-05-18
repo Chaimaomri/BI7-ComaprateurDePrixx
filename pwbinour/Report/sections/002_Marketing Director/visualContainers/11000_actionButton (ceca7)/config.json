@@ -1,0 +1,53 @@
+{
+  "name": "ceca7a230371e0b8905e",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 219.81762917933131,
+        "y": 18.480243161094226,
+        "z": 12000,
+        "width": 40.851063829787236,
+        "height": 39.878419452887542,
+        "tabOrder": 11000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "actionButton",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "icon": [
+        {
+          "properties": {
+            "shapeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'leftArrow'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

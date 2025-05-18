@@ -1,0 +1,120 @@
+{
+  "Commands": [
+    {
+      "SemanticQueryDataShapeCommand": {
+        "Query": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "Fait_RESERVATIONS",
+              "Type": 0
+            },
+            {
+              "Name": "d",
+              "Entity": "DimTemps",
+              "Type": 0
+            }
+          ],
+          "Select": [
+            {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "f"
+                  }
+                },
+                "Property": "Reservation_Par_Année"
+              },
+              "Name": "Fait_RESERVATIONS.Reservation_Par_Mois"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "d"
+                      }
+                    },
+                    "Hierarchy": "Date_Complète Hiérarchie"
+                  }
+                },
+                "Level": "Année"
+              },
+              "Name": "DimTemps.Date_Complète Hiérarchie.Année"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "d"
+                      }
+                    },
+                    "Hierarchy": "Date_Complète Hiérarchie"
+                  }
+                },
+                "Level": "Trimestre"
+              },
+              "Name": "DimTemps.Date_Complète Hiérarchie.Trimestre"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "d"
+                      }
+                    },
+                    "Hierarchy": "Date_Complète Hiérarchie"
+                  }
+                },
+                "Level": "Mois"
+              },
+              "Name": "DimTemps.Date_Complète Hiérarchie.Mois"
+            },
+            {
+              "HierarchyLevel": {
+                "Expression": {
+                  "Hierarchy": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "d"
+                      }
+                    },
+                    "Hierarchy": "Date_Complète Hiérarchie"
+                  }
+                },
+                "Level": "Jour"
+              },
+              "Name": "DimTemps.Date_Complète Hiérarchie.Jour"
+            }
+          ]
+        },
+        "Binding": {
+          "Primary": {
+            "Groupings": [
+              {
+                "Projections": [
+                  0,
+                  1
+                ]
+              }
+            ]
+          },
+          "DataReduction": {
+            "DataVolume": 4,
+            "Primary": {
+              "Sample": {}
+            }
+          },
+          "Version": 1
+        },
+        "ExecutionMetricsKind": 1
+      }
+    }
+  ]
+}

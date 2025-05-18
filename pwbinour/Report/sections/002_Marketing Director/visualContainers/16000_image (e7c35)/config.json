@@ -1,0 +1,38 @@
+{
+  "name": "e7c35d280b29a798201d",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 227.59878419452889,
+        "y": 22.370820668693014,
+        "z": 17000,
+        "width": 57.38601823708207,
+        "height": 52.52279635258359,
+        "tabOrder": 16000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "image",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "download-removebg-preview_(4)24779761049627635.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "32082d91885303187b90"
+}

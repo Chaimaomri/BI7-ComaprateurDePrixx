@@ -1,0 +1,157 @@
+{
+  "name": "b60e42a0bb5483d70811",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 653.0653266331658,
+        "y": 0,
+        "z": 2000,
+        "width": 50365.628140703513,
+        "height": 26345.1256281407,
+        "tabOrder": 2000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "pythonVisual",
+    "projections": {
+      "Values": [
+        {
+          "queryRef": "predictions_duree_vols (1).Column1"
+        },
+        {
+          "queryRef": "predictions_duree_vols (1).Column2"
+        },
+        {
+          "queryRef": "predictions_duree_vols (1).Column3"
+        },
+        {
+          "queryRef": "predictions_duree_vols (1).Column4"
+        },
+        {
+          "queryRef": "predictions_duree_vols (1).Column5"
+        },
+        {
+          "queryRef": "predictions_duree_vols (1).Column6"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "p",
+          "Entity": "predictions_duree_vols (1)",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column1"
+          },
+          "Name": "predictions_duree_vols (1).Column1"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column2"
+          },
+          "Name": "predictions_duree_vols (1).Column2"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column3"
+          },
+          "Name": "predictions_duree_vols (1).Column3"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column4"
+          },
+          "Name": "predictions_duree_vols (1).Column4"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column5"
+          },
+          "Name": "predictions_duree_vols (1).Column5"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "Column6"
+          },
+          "Name": "predictions_duree_vols (1).Column6"
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# Le code suivant, qui crée un dataframe et supprime les lignes dupliquées, est toujours exécuté et sert de préambule à votre script : \n\n# dataset = pandas.DataFrame(Column1, Column2, Column3, Column4, Column5, Column6)\n# dataset = dataset.drop_duplicates()\n\n# Collez ou tapez votre code de script ici :\nimport pandas as pd\nimport pyodbc\nimport matplotlib.pyplot as plt\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error\n\n# 1. Connexion à SQL Server\nconn = pyodbc.connect(\n    \"DRIVER={SQL Server};\"\n    \"SERVER=DESKTOP-4CQ7KCG;\"\n    \"DATABASE=PI_DW;\"\n    \"Trusted_Connection=yes;\"\n)\n\n# 2. Chargement des données depuis la table Dim_Vols\nquery = \"SELECT * FROM Dim_Vols\"\ndf = pd.read_sql(query, conn)\n\n# 3. Affichage des colonnes\nprint(\"Colonnes du DataFrame :\", df.columns.tolist())\n\n# 4. Traitement des heures de départ et d''arrivée\ndf[''DepartHour''] = pd.to_datetime(df[''DepartHour''], format=''%H:%M'')\ndf[''ArriveHour''] = pd.to_datetime(df[''ArriveHour''], format=''%H:%M'')\n\n# 5. Calcul de la durée de vol en heures\ndf[''FlightDuration''] = (df[''ArriveHour''] - df[''DepartHour'']).dt.total_seconds() / 3600\n\n# 6. Correction des vols arrivant le jour suivant\ndf.loc[df[''FlightDuration''] < 0, ''FlightDuration''] += 24\n\n# 7. Vérification rapide\nprint(df[[''DepartHour'', ''ArriveHour'', ''FlightDuration'']].head())\n\n# 8. Conversion des heures en format numérique pour la modélisation\ndf[''DepartHour_numeric''] = df[''DepartHour''].dt.hour + df[''DepartHour''].dt.minute / 60\ndf[''ArriveHour_numeric''] = df[''ArriveHour''].dt.hour + df[''ArriveHour''].dt.minute / 60\n\n# 9. Sélection des variables pour la régression\nX = df[[''DepartHour_numeric'', ''Airline'', ''DepartAirport'', ''ArriveAirport'']]\ny = df[''FlightDuration'']\n\n# 10. Encodage des variables catégorielles\nX = pd.get_dummies(X, drop_first=True)\n\n# 11. Séparation train/test\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# 12. Modélisation\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\n\n# 13. Prédiction\ny_pred = model.predict(X_test)\n\n# 14. Évaluation\nmse = mean_squared_error(y_test, y_pred)\nprint(\"Mean Squared Error:\", mse)\n\n# 15. Visualisation de la distribution des durées des vols\nplt.figure(figsize=(10, 6))\nplt.hist(df[''FlightDuration''], bins=20, color=''skyblue'', edgecolor=''black'')\nplt.title(''Distribution des Durées des Vols (corrigée)'')\nplt.xlabel(''Durée du Vol (en heures)'')\nplt.ylabel(''Nombre de Vols'')\nplt.grid(True)\nplt.show()\n\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

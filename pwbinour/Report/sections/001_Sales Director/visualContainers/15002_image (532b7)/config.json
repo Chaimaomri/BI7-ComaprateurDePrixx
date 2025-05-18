@@ -1,0 +1,39 @@
+{
+  "name": "532b73840888ccc4d950",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 236.5649365114725,
+        "y": 0,
+        "z": 15002,
+        "width": 69.850746268656721,
+        "height": 119.1044776119403,
+        "tabOrder": 15002
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "image",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "imageUrl": {
+              "expr": {
+                "ResourcePackageItem": {
+                  "PackageName": "RegisteredResources",
+                  "PackageType": 1,
+                  "ItemName": "panier20281742563879734.png"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "parentGroupName": "7b6860797c3c13282697",
+  "howCreated": "InsertVisualButton"
+}

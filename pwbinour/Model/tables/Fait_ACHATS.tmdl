@@ -1,0 +1,345 @@
+﻿table Fait_ACHATS
+
+	measure Prix_Moyen = ```
+			AVERAGE(Fait_ACHATS[Prix_Unitaire])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Nb_Achats = ```
+			COUNT(Fait_ACHATS[AchatID_PK])
+			
+			```
+		formatString: 0
+
+	measure Chiffre_d_Affaire = ```
+			SUMX(
+			    Fait_ACHATS,
+			    Fait_ACHATS[Quantité_Achetée] * Fait_ACHATS[Prix_Total]
+			)
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure SansPromo = ```
+			SUM(Fait_ACHATS[Quantité_Achetée])
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Taux_Fidelisation = ```
+			
+			DIVIDE(
+			    COUNTROWS(FILTER(Dim_Clients, [Nb_Achats] > 1)),
+			    COUNTROWS(Dim_Clients)
+			) * 100
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Reservations_Par_Localisation = ```
+			
+			CALCULATE(
+			    COUNT(Fait_RESERVATIONS[Reservation_PK]),
+			    Dim_Localisation[Localite]
+			)
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_Produit = ```
+			
+			CALCULATE(SUM(Fait_ACHATS[Prix_Total]), Dim_Produits[Produit])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_Mois = ```
+			
+			CALCULATE(
+			    SUM(Fait_ACHATS[Prix_Total]),
+			    DimTemps[Mois]
+			)
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Marge_Brute = ```
+			
+			SUMX(
+			    Fait_ACHATS,
+			    Fait_ACHATS[Prix_Total] - (Fait_ACHATS[Quantité_Achetée] * Fait_ACHATS[Prix_Unitaire])
+			)
+			
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Variation_Prix_Tendance = ```
+			
+			DIVIDE(
+			    AVERAGE(Fait_ACHATS[Prix_Unitaire]) - 
+			    CALCULATE(AVERAGE(Fait_ACHATS[Prix_Unitaire]), DATEADD(DimTemps[Mois], -1, MONTH)),
+			    CALCULATE(AVERAGE(Fait_ACHATS[Prix_Unitaire]), DATEADD(DimTemps[Mois], -1, MONTH))
+			) * 100
+			
+			```
+		formatString: 0
+
+	measure Ventes_Par_Categorie = ```
+			
+			CALCULATE(
+			    SUM(Fait_ACHATS[Prix_Total]),
+			    Dim_Produits[Marque]
+			)
+			
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Segment_Client = ```
+			
+			CALCULATE(COUNTROWS(Dim_Clients), Fait_ACHATS[Prix_Total] > 1000)
+			
+			```
+		formatString: 0
+
+	measure Produits_les_Plus_Vendus = ```
+			
+			CALCULATE(SUM(Fait_ACHATS[Quantité_Achetée]), Dim_Produits[Produit])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Marge_Brute_Estimée = ```
+			
+			SUM(Fait_ACHATS[Prix_Total]) * 0.30
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Depenses_Estimées = ```
+			
+			SUM(Fait_ACHATS[Prix_Total]) * 0.30
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Marge_Nette_Estimée = ```
+			
+			SUM(Fait_ACHATS[Prix_Total]) - 
+			(SUM(Fait_ACHATS[Prix_Total]) * 0.30) - 
+			(SUM(Fait_ACHATS[Prix_Total]) * 0.10)
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Rentabilite_Par_Produit = ```
+			
+			SUM(Fait_ACHATS[Prix_Total]) - 
+			(SUM(Fait_ACHATS[Prix_Total]) * 0.30)  -- 30% marge, donc COGS estimé à 70%
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'DIVERSITE DES PRODUITS' = DIVIDE(DISTINCTCOUNT(Dim_Produits[ProduitID]),CALCULATE(DISTINCTCOUNT(Dim_Produits[ProduitID])))
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Segment_Client1 = ```
+			
+			CALCULATE(
+			    COUNTROWS(Dim_Clients), 
+			    FILTER(Fait_ACHATS, Fait_ACHATS[Prix_Unitaire] * Fait_ACHATS[SansPromo] > 1000)
+			)
+			```
+		formatString: 0
+
+	measure Clients_Récurrents = ```
+			
+			CALCULATE(
+			    COUNTROWS(Dim_Clients),
+			    FILTER(Dim_Clients, COUNTROWS(Fait_ACHATS) > 1)
+			)
+			
+			```
+		formatString: 0
+
+	measure Ventes_Par_Région = ```
+			
+			CALCULATE(
+			    SUM(Fait_ACHATS[Prix_Total]),
+			    Dim_Localisation[Delegation]
+			)
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Ventes_Par_Client = ```
+			
+			CALCULATE(
+			    SUM(Fait_ACHATS[Prix_Total]),
+			    Dim_Clients[Client_PK]
+			)
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Prevision_Revenus_3_Mois = ```
+			
+			AVERAGEX(
+			    DATESINPERIOD(DimTemps[Date_Complète], MAX(DimTemps[Date_Complète]), -3, MONTH),
+			    Fait_ACHATS[Chiffre_d_Affaire]
+			)
+			
+			```
+		formatString: 0
+
+	measure Flux_Tresorerie = ```
+			
+			SUM(Fait_ACHATS[Prix_Total]) - SUM(Fait_RESERVATIONS[Total_Prix])
+			
+			```
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Mesure
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure Profit_Brut =
+			
+			CALCULATE((SUM(Fait_ACHATS[Prix_Total]) - Fait_ACHATS[Depenses_Estimées]))
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Comparaison_Revenus_Annuel
+
+	measure Marge_Rentabilite =
+			
+			DIVIDE(
+			    [Profit_Brut],
+			    SUM(Fait_ACHATS[Prix_Total]),
+			    0
+			) * 100
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'CA Total' = SUM(Fait_ACHATS[Prix_Total])
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average Satisfaction' =
+			
+			AVERAGE(Fait_RESERVATIONS[Note_Client])
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'ventes totales' = Ventes[Quantité] * Ventes[Prix Unitaire]
+
+	measure 'Mesure 2'
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column AchatID_PK
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: AchatID_PK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Client_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Client_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produit_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Produit_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Localisation_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Localisation_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column TempsID_FK
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: TempsID_FK
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantité_Achetée
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Quantité_Achetée
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Prix_Unitaire
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Prix_Unitaire
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Prix_Total
+		dataType: double
+		summarizeBy: sum
+		sourceColumn: Prix_Total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fait_ACHATS-32480b2f-4e56-4fa1-823b-0b4846c2b409 = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Databases("DESKTOP-DID3VS7"),
+				    PI_DW = Source{[Name="PI_DW"]}[Data],
+				    dbo_Fait_ACHATS = PI_DW{[Schema="dbo",Item="Fait_ACHATS"]}[Data]
+				in
+				    dbo_Fait_ACHATS
+
+	annotation PBI_ResultType = Table
+

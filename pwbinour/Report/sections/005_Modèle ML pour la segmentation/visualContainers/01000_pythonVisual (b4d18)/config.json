@@ -1,0 +1,159 @@
+{
+  "name": "b4d180f0e33438042003",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 226.13065326633165,
+        "y": 115.7788944723618,
+        "z": 2000,
+        "width": 3974.4723618090452,
+        "height": 1973.6683417085426,
+        "tabOrder": 1000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "pythonVisual",
+    "projections": {
+      "Values": [
+        {
+          "queryRef": "client_segmentation.Cluster"
+        },
+        {
+          "queryRef": "client_segmentation.PCA1"
+        },
+        {
+          "queryRef": "client_segmentation.PCA2"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "c",
+          "Entity": "client_segmentation",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "c"
+              }
+            },
+            "Property": "Cluster"
+          },
+          "Name": "client_segmentation.Cluster"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "c"
+              }
+            },
+            "Property": "PCA1"
+          },
+          "Name": "client_segmentation.PCA1"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "c"
+              }
+            },
+            "Property": "PCA2"
+          },
+          "Name": "client_segmentation.PCA2"
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# Le code suivant, qui crée un dataframe et supprime les lignes dupliquées, est toujours exécuté et sert de préambule à votre script : \n\n# dataset = pandas.DataFrame(Cluster, PCA1, PCA2)\n# dataset = dataset.drop_duplicates()\n\n# Collez ou tapez votre code de script ici :\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.cluster import KMeans\nfrom sklearn.decomposition import PCA\nimport pyodbc\n\n# Connexion à SQL Server\nconn = pyodbc.connect(\n    \"DRIVER={SQL Server};\"\n    \"SERVER=DESKTOP-4CQ7KCG;\"\n    \"DATABASE=PI_DW;\"\n    \"Trusted_Connection=yes;\"\n)\n\n# Lecture des tables\ndf_reservations = pd.read_sql(\"SELECT * FROM Fait_RESERVATIONS\", conn)\ndf_achats = pd.read_sql(\"SELECT * FROM Fait_ACHATS\", conn)\ndf_clients = pd.read_sql(\"SELECT * FROM Dim_Clients\", conn)\n\n# Nettoyage des prix (si type object)\nif df_reservations[''Total_Prix''].dtype == ''object'':\n    df_reservations[''Total_Prix''] = (\n        df_reservations[''Total_Prix'']\n        .str.replace('','', ''.'', regex=False)\n        .str.replace('' '', '''', regex=False)\n        .astype(float)\n    )\n\nif df_achats[''Prix_Total''].dtype == ''object'':\n    df_achats[''Prix_Total''] = (\n        df_achats[''Prix_Total'']\n        .str.replace('','', ''.'', regex=False)\n        .str.replace('' '', '''', regex=False)\n        .astype(float)\n    )\n\n# Agrégation des réservations\nreserv_summary = df_reservations.groupby(''ClientID_FK'').agg({\n    ''Total_Prix'': ''sum'',\n    ''Note_Client'': ''mean'',\n    ''Reservation_PK'': ''count''\n}).rename(columns={\n    ''Total_Prix'': ''Montant_Reservations'',\n    ''Note_Client'': ''Note_Moyenne'',\n    ''Reservation_PK'': ''Nbr_Reservations''\n})\n\n# Agrégation des achats\nachat_summary = df_achats.groupby(''Client_FK'').agg({\n    ''Prix_Total'': ''sum'',\n    ''Quantité_Achetée'': ''sum'',\n    ''AchatID_PK'': ''count''\n}).rename(columns={\n    ''Prix_Total'': ''Montant_Achats'',\n    ''Quantité_Achetée'': ''Total_Quantité'',\n    ''AchatID_PK'': ''Nbr_Achats''\n})\n\n# Fusion des deux résumés\nclient_behavior = reserv_summary.merge(achat_summary, left_index=True, right_index=True, how=''outer'')\nclient_behavior = client_behavior.fillna(0)\n\n# Normalisation\nscaler = StandardScaler()\nX_scaled = scaler.fit_transform(client_behavior)\n\n# KMeans Clustering\nkmeans = KMeans(n_clusters=4, random_state=42)\nclient_behavior[''Cluster''] = kmeans.fit_predict(X_scaled)\n\n# Réduction dimensionnelle avec PCA\npca = PCA(n_components=2)\ncomponents = pca.fit_transform(X_scaled)\nclient_behavior[''PCA1''] = components[:, 0]\nclient_behavior[''PCA2''] = components[:, 1]\n\n# Visualisation\nplt.figure(figsize=(10, 6))\nsns.scatterplot(data=client_behavior, x=''PCA1'', y=''PCA2'', hue=''Cluster'', palette=''Set2'')\nplt.title(''Segmentation des clients (KMeans + PCA)'')\nplt.xlabel(''Composante principale 1'')\nplt.ylabel(''Composante principale 2'')\nplt.show()\n'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

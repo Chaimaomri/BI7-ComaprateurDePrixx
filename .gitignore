@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Ignorer les environnements virtuels Python et Node
 **/venv*/
 **/venv*/
@@ -14,3 +15,21 @@ Thumbs.db
 
 # Angular build output
 projet/dist/
+=======
+<<<<<<< HEAD
+# Fichiers temporaires Power BI
+*.tmp
+*.bak
+*.cache
+
+# Paramètres de VS Code
+.vscode/
+
+# Fichiers Node, Python, etc. (si ajout futur)
+node_modules/
+__pycache__/
+.env
+=======
+
+>>>>>>> 0ba1f41ae2baa8fb1f579cc9a1a92c912d3d565a
+>>>>>>> d2d23dfd60c3c0888eecc7fc912296f747f9c001

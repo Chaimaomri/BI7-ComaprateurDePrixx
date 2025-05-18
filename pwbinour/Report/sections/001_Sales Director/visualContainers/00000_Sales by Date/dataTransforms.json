@@ -1,0 +1,231 @@
+{
+  "objects": {
+    "labels": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "projectionOrdering": {
+    "Y": [
+      0
+    ],
+    "Category": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "projectionActiveItems": {
+    "Category": [
+      {
+        "queryRef": "DimTemps.Date_Complète Hiérarchie.Jour",
+        "suppressConcat": false
+      }
+    ]
+  },
+  "queryMetadata": {
+    "Select": [
+      {
+        "Restatement": "Ventes_Par_Mois",
+        "Name": "Fait_ACHATS.Ventes_Par_Mois",
+        "Type": 1
+      },
+      {
+        "Restatement": "Année",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Année",
+        "Type": 3,
+        "Format": "0"
+      },
+      {
+        "Restatement": "Trimestre",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Trimestre",
+        "Type": 3,
+        "Format": "0"
+      },
+      {
+        "Restatement": "Mois",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Mois",
+        "Type": 3,
+        "Format": "0"
+      },
+      {
+        "Restatement": "Jour",
+        "Name": "DimTemps.Date_Complète Hiérarchie.Jour",
+        "Type": 3,
+        "Format": "0"
+      }
+    ]
+  },
+  "visualElements": [
+    {
+      "DataRoles": [
+        {
+          "Name": "Y",
+          "Projection": 0,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 1,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 2,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 3,
+          "isActive": false
+        },
+        {
+          "Name": "Category",
+          "Projection": 4,
+          "isActive": true
+        }
+      ]
+    }
+  ],
+  "selects": [
+    {
+      "displayName": "Ventes_Par_Mois",
+      "queryName": "Fait_ACHATS.Ventes_Par_Mois",
+      "roles": {
+        "Y": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 259
+      },
+      "expr": {
+        "Measure": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Fait_ACHATS"
+            }
+          },
+          "Property": "Ventes_Par_Mois"
+        }
+      }
+    },
+    {
+      "displayName": "Année",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Année",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Année"
+        }
+      }
+    },
+    {
+      "displayName": "Trimestre",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Trimestre",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Trimestre"
+        }
+      }
+    },
+    {
+      "displayName": "Mois",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Mois",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Mois"
+        }
+      }
+    },
+    {
+      "displayName": "Jour",
+      "format": "0",
+      "queryName": "DimTemps.Date_Complète Hiérarchie.Jour",
+      "roles": {
+        "Category": true
+      },
+      "type": {
+        "category": null,
+        "underlyingType": 260
+      },
+      "expr": {
+        "HierarchyLevel": {
+          "Expression": {
+            "Hierarchy": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "DimTemps"
+                }
+              },
+              "Hierarchy": "Date_Complète Hiérarchie"
+            }
+          },
+          "Level": "Jour"
+        }
+      }
+    }
+  ]
+}

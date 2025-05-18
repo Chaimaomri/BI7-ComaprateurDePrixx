@@ -1,0 +1,275 @@
+{
+  "name": "c02aec81187e8832290b",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 687.76119402985069,
+        "y": 513.1343283582089,
+        "z": 2000,
+        "width": 298.20895522388059,
+        "height": 206.86567164179104,
+        "tabOrder": 0
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "stackedAreaChart",
+    "projections": {
+      "Y": [
+        {
+          "queryRef": "Fait_ACHATS.Ventes_Par_Mois"
+        }
+      ],
+      "Category": [
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Année"
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Trimestre"
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Mois"
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Jour",
+          "active": true
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "f",
+          "Entity": "Fait_ACHATS",
+          "Type": 0
+        },
+        {
+          "Name": "d",
+          "Entity": "DimTemps",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "f"
+              }
+            },
+            "Property": "Ventes_Par_Mois"
+          },
+          "Name": "Fait_ACHATS.Ventes_Par_Mois"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Année"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Année"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Trimestre"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Trimestre"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Mois"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Mois"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Jour"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Jour"
+        }
+      ],
+      "OrderBy": [
+        {
+          "Direction": 2,
+          "Expression": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Source": "f"
+                }
+              },
+              "Property": "Ventes_Par_Mois"
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "hasDefaultSort": true,
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Sales by Date'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#118dff'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

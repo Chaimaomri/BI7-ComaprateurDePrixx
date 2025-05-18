@@ -1,0 +1,43 @@
+﻿table prevision_sarima_reservations
+
+	column ds
+		dataType: dateTime
+		formatString: Long Date
+		summarizeBy: none
+		sourceColumn: ds
+
+		variation Variation
+			isDefault
+			relationship: 56526aa5-9ce5-4e9c-a991-f557518374d9
+			defaultHierarchy: LocalDateTable_2444906a-d3cb-4d82-b9e0-9d98f0b97da6.'Hiérarchie de dates'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column reservations
+		dataType: string
+		summarizeBy: none
+		sourceColumn: reservations
+
+		annotation SummarizationSetBy = Automatic
+
+	column prevision_sarima
+		dataType: string
+		summarizeBy: none
+		sourceColumn: prevision_sarima
+
+		annotation SummarizationSetBy = Automatic
+
+	partition prevision_sarima_reservations-4226f3c2-78b3-45fc-96c3-cb7c718cb1fa = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Administrateur\Downloads\prevision_sarima_reservations.csv"),[Delimiter=",", Columns=3, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"En-têtes promus" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Type modifié" = Table.TransformColumnTypes(#"En-têtes promus",{{"ds", type date}, {"reservations", type text}, {"prevision_sarima", type text}})
+				in
+				    #"Type modifié"
+
+	annotation PBI_ResultType = Table
+

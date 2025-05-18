@@ -1,0 +1,38 @@
+﻿model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: fr-TN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Fait_ACHATS","Fait_RESERVATIONS","DimTemps","Dim_Vols","Dim_Produits","Dim_Localisation","Dim_Hotels","Dim_Clients","client_segmentation","navigation","predictions_duree_vols (1)","prevision_sarima_reservations","recommandations_clients (1)","UserAccess","resultats_analyse_sentimentale (1)"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.142.1277.0 (25.04)+014fde450f93691fc9537f0758d73d1c5df153ef
+
+ref table Fait_ACHATS
+ref table DateTableTemplate_ee4bddc8-d6bc-421a-9383-2531021ce30e
+ref table Fait_RESERVATIONS
+ref table DimTemps
+ref table Dim_Vols
+ref table Dim_Produits
+ref table Dim_Localisation
+ref table Dim_Hotels
+ref table Dim_Clients
+ref table client_segmentation
+ref table Paramètre
+ref table navigation
+ref table 'predictions_duree_vols (1)'
+ref table prevision_sarima_reservations
+ref table LocalDateTable_2444906a-d3cb-4d82-b9e0-9d98f0b97da6
+ref table 'recommandations_clients (1)'
+ref table UserAccess
+ref table 'resultats_analyse_sentimentale (1)'
+
+ref role 'Nouveau rôle 2'
+ref role 'Nouveau rôle'
+
+ref cultureInfo fr-FR
+

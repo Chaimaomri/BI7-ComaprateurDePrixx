@@ -1,0 +1,54 @@
+{
+  "name": "32082d91885303187b90",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 240,
+        "y": 113.73134328358209,
+        "z": 16000,
+        "width": 286.56716417910445,
+        "height": 95.820895522388057,
+        "tabOrder": 14000
+      }
+    }
+  ],
+  "singleVisualGroup": {
+    "displayName": "Groupe 3",
+    "groupMode": 0,
+    "objects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "11D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

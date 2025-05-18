@@ -1,0 +1,67 @@
+{
+  "name": "030822773060a8608ba7",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 1229.4224924012158,
+        "y": 18.480243161094226,
+        "z": 13000,
+        "width": 50.577507598784194,
+        "height": 39.878419452887542,
+        "tabOrder": 12000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "actionButton",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "icon": [
+        {
+          "properties": {
+            "shapeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rightArrow'"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "visualLink": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'PageNavigation'"
+                }
+              }
+            },
+            "navigationSection": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ReportSection02470ae5343a01378aba'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

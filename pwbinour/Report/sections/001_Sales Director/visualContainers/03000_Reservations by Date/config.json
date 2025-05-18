@@ -1,0 +1,275 @@
+{
+  "name": "56e9feec7d7a34264de8",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 994.92537313432831,
+        "y": 513.1343283582089,
+        "z": 5000,
+        "width": 278.50746268656718,
+        "height": 206.86567164179104,
+        "tabOrder": 3000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "clusteredColumnChart",
+    "projections": {
+      "Y": [
+        {
+          "queryRef": "Fait_RESERVATIONS.Reservation_Par_Mois"
+        }
+      ],
+      "Category": [
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Année",
+          "active": true
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Trimestre"
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Mois"
+        },
+        {
+          "queryRef": "DimTemps.Date_Complète Hiérarchie.Jour"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "f",
+          "Entity": "Fait_RESERVATIONS",
+          "Type": 0
+        },
+        {
+          "Name": "d",
+          "Entity": "DimTemps",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "f"
+              }
+            },
+            "Property": "Reservation_Par_Année"
+          },
+          "Name": "Fait_RESERVATIONS.Reservation_Par_Mois"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Année"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Année"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Trimestre"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Trimestre"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Mois"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Mois"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "SourceRef": {
+                    "Source": "d"
+                  }
+                },
+                "Hierarchy": "Date_Complète Hiérarchie"
+              }
+            },
+            "Level": "Jour"
+          },
+          "Name": "DimTemps.Date_Complète Hiérarchie.Jour"
+        }
+      ],
+      "OrderBy": [
+        {
+          "Direction": 2,
+          "Expression": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Source": "f"
+                }
+              },
+              "Property": "Reservation_Par_Année"
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "hasDefaultSort": true,
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Reservations by Date'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 3,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#118dff'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "name": "490dccb29ac9b0702c74",
+  "layouts": [
+    {
+      "id": 0,
+      "position": {
+        "x": 209.84924623115577,
+        "y": 450.45226130653265,
+        "z": 3000,
+        "width": 1070.9547738693466,
+        "height": 269.54773869346729,
+        "tabOrder": 3000
+      }
+    }
+  ],
+  "singleVisual": {
+    "visualType": "pythonVisual",
+    "projections": {
+      "Values": [
+        {
+          "queryRef": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Année"
+        },
+        {
+          "queryRef": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Trimestre"
+        },
+        {
+          "queryRef": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Mois"
+        },
+        {
+          "queryRef": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Jour"
+        },
+        {
+          "queryRef": "prevision_sarima_reservations.prevision_sarima"
+        },
+        {
+          "queryRef": "prevision_sarima_reservations.reservations"
+        }
+      ]
+    },
+    "prototypeQuery": {
+      "Version": 2,
+      "From": [
+        {
+          "Name": "p",
+          "Entity": "prevision_sarima_reservations",
+          "Type": 0
+        }
+      ],
+      "Select": [
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "p"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "ds"
+                  }
+                },
+                "Hierarchy": "Hiérarchie de dates"
+              }
+            },
+            "Level": "Année"
+          },
+          "Name": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Année"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "p"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "ds"
+                  }
+                },
+                "Hierarchy": "Hiérarchie de dates"
+              }
+            },
+            "Level": "Trimestre"
+          },
+          "Name": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Trimestre"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "p"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "ds"
+                  }
+                },
+                "Hierarchy": "Hiérarchie de dates"
+              }
+            },
+            "Level": "Mois"
+          },
+          "Name": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Mois"
+        },
+        {
+          "HierarchyLevel": {
+            "Expression": {
+              "Hierarchy": {
+                "Expression": {
+                  "PropertyVariationSource": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "p"
+                      }
+                    },
+                    "Name": "Variation",
+                    "Property": "ds"
+                  }
+                },
+                "Hierarchy": "Hiérarchie de dates"
+              }
+            },
+            "Level": "Jour"
+          },
+          "Name": "prevision_sarima_reservations.ds.Variation.Hiérarchie de dates.Jour"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "prevision_sarima"
+          },
+          "Name": "prevision_sarima_reservations.prevision_sarima"
+        },
+        {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Source": "p"
+              }
+            },
+            "Property": "reservations"
+          },
+          "Name": "prevision_sarima_reservations.reservations"
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "script": [
+        {
+          "properties": {
+            "source": {
+              "expr": {
+                "Literal": {
+                  "Value": "'# Le code suivant, qui crée un dataframe et supprime les lignes dupliquées, est toujours exécuté et sert de préambule à votre script : \n\n# dataset = pandas.DataFrame(Année, Trimestre, Mois, Jour, prevision_sarima, reservations)\n# dataset = dataset.drop_duplicates()\n\n# Collez ou tapez votre code de script ici :\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport pyodbc\nfrom statsmodels.tsa.stattools import adfuller\nfrom statsmodels.tsa.arima.model import ARIMA\n\n# 2. Connexion à SQL Server\nconn = pyodbc.connect(\n    \"DRIVER={SQL Server};\"\n    \"SERVER=DESKTOP-4CQ7KCG;\"  # Remplacez par l''adresse de votre serveur SQL\n    \"DATABASE=PI_DW;\"           # Remplacez par le nom de votre base de données\n    \"Trusted_Connection=yes;\"   # Utilisez ''yes'' pour la connexion de confiance\n)\n\n# 3. Charger les données directement depuis SQL Server\nquery_temps = \"SELECT * FROM DimTemps\"\nquery_reservations = \"SELECT * FROM Fait_Reservations\"\n\ndf_temps = pd.read_sql(query_temps, conn)\ndf_reservations = pd.read_sql(query_reservations, conn)\n\n# 4. Jointure des données\ndf = df_reservations.merge(df_temps, left_on=''Temps_FK'', right_on=''TempsID'', how=''left'')\n\n# 5. Agrégation des données par semaine\ndf_weekly = df.groupby(''Semaine_Année'').agg({\n    ''Reservation_PK'': ''count'',  # Compter les réservations\n    ''Jour_Férié'': ''sum'',       # Compter les jours fériés\n    ''Mois'': ''first'',           # Prendre le mois de la première réservation\n    ''Trimestre'': ''first''       # Prendre le trimestre de la première réservation\n}).reset_index().rename(columns={''Reservation_PK'': ''reservations''})\n\n# 6. Définir l''année fixe\nannée = ''2024''\n\n# 7. Nettoyage des données (conversion en entier)\ndf_weekly[''Semaine_Année''] = df_weekly[''Semaine_Année''].astype(int)\n\n# 8. Construction de la colonne ''ds'' (date)\ndf_weekly[''ds''] = pd.to_datetime(année + df_weekly[''Semaine_Année''].astype(str).str.zfill(2) + ''-1'', format=''%G%V-%u'')\n\n# 9. Tri des données et indexation par la colonne ''ds'' (date)\ndf_weekly = df_weekly.sort_values(''ds'')\ndf_weekly.set_index(''ds'', inplace=True)\n\n\n\n# 11. Vérification de stationnarité avec le test ADF (Augmented Dickey-Fuller)\nresult = adfuller(df_weekly[''reservations''])\nprint(f\"ADF Statistic: {result[0]}\")\nprint(f\"p-value: {result[1]}\")\n\n# 12. Modélisation ARIMA\nmodel = ARIMA(df_weekly[''reservations''], order=(1,1,1))  # (p,d,q) où p = 1, d = 1, q = 1\nmodel_fit = model.fit()\n\n# 13. Prévision des 12 prochaines semaines\nforecast = model_fit.forecast(steps=12)\n\n# 14. Affichage de la prévision (graphique)\nplt.figure(figsize=(12,5))\nplt.plot(df_weekly[''reservations''], label=''Historique'')  # Courbe des réservations historiques\nplt.plot(pd.date_range(start=df_weekly.index[-1], periods=13, freq=''W'')[1:], forecast, label=''Prévision'', color=''orange'')  # Prévision des 12 prochaines semaines\nplt.title(\"Prévision des réservations hebdomadaires (ARIMA)\")  # Titre du graphique\nplt.xlabel(\"Semaine\")  # Label de l''axe X\nplt.ylabel(\"Réservations\")  # Label de l''axe Y\nplt.legend()  # Légende pour les courbes\nplt.grid(True)  # Ajout de la grille\nplt.show()  # Affichage du graphique'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Python'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "vcObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 2,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
