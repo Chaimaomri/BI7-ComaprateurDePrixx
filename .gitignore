@@ -1,0 +1,16 @@
+# Ignorer les environnements virtuels Python et Node
+**/venv*/
+**/venv*/
+**/node_modules/
+
+# fichiers temporaires
+*.log
+*.pyc
+__pycache__/
+
+# fichiers système
+.DS_Store
+Thumbs.db
+
+# Angular build output
+projet/dist/
